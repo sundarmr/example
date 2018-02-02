@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.city</groupId>
+	<artifactId>parent</artifactId>
+	<version>1.0.0</version>
+	<name>City Of Raleigh :: Parent Project</name>
+	<description>Parent POM for all City integration projects using Fuse.</description>
+	<organization>
+		<name>City Of Raleigh</name>
+		<url></url>
+	</organization>
+	<packaging>pom</packaging>
+
+	<developers>
+		<developer>
+			<id>surender.dalal</id>
+			<name>Surender Dala</name>
+			<email>Surender.Dalal@raleighnc.gov</email>
+			<organization>Raleigh NC</organization>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>America/New_York</timezone>
+		</developer>
+	</developers>
+
+	<properties>
+		<!-- General build properties -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Compiler properties -->
+		<jdk.version>1.8</jdk.version>
+		<compiler.fork>false</compiler.fork>
+
+		<!-- Fuse-specific properties -->
+		<jboss.fuse.bom.version>6.3.0.redhat-310</jboss.fuse.bom.version>
+		<!-- OSGi bundle properties -->
+		<osgi.exclude.dependencies>false</osgi.exclude.dependencies>
+		<osgi.activator />
+		<osgi.import.package>*</osgi.import.package>
+		<osgi.export.package />
+		<osgi.dynamic.import.package>*</osgi.dynamic.import.package>
+		<osgi.private.package>*</osgi.private.package>
+		<osgi.import.service />
+		<osgi.export.service />
+		<!-- Maven plugin version properties -->
+		<maven-bundle-plugin-version>3.0.0</maven-bundle-plugin-version>
+		<maven-compiler-plugin-version>3.2</maven-compiler-plugin-version>
+		<maven-surefire-plugin-version>2.18.1</maven-surefire-plugin-version>
+		
+	</properties>
+
+	<!-- Configure  distribution repositories for releases if you have nexus-->
+	<distributionManagement>
+		<repository />
+	</distributionManagement>
+
+	<!-- Set up the dependencies that are common for all projects -->
+	<dependencyManagement>
+		<dependencies>
+			<!-- Fuse BOM -->
+			<dependency>
+				<groupId>org.jboss.fuse.bom</groupId>
+				<artifactId>jboss-fuse-parent</artifactId>
+				<version>${jboss.fuse.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- Spring -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jms</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<!-- Enable the following dependencies for all children -->
+	<dependencies>
+		<!-- Set up slf4j to be used as the logging facade for log4j for all children -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<!-- Include core dependencies that will be used almost everywhere -->
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jaxb</artifactId>
+		</dependency>
+		<!-- Set up testing dependencies since we always test like good devs should 
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-test-blueprint</artifactId>
+			<scope>test</scope>
+		</dependency>-->
+	</dependencies>
+	<!-- Set up build goals, resources, and plugins -->
+	<build>
+		<defaultGoal>clean install</defaultGoal>
+		<!-- Define the plugins -->
+		<pluginManagement>
+			<plugins>
+				<!-- Core plugins -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin-version}</version>
+					<configuration>
+						<source>${jdk.version}</source>
+						<target>${jdk.version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>${maven-versions-plugin-version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>cxf-codegen-plugin</artifactId>
+					<version>${cxf.version}</version>
+				</plugin>
+				<!-- OSGi plugins -->
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>${maven-bundle-plugin-version}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<excludeDependencies>${osgi.exclude.dependencies}</excludeDependencies>
+						<instructions>
+							<Bundle-Name>${project.name}</Bundle-Name>
+							<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+							<Bundle-Activator>${osgi.activator}</Bundle-Activator>
+							<Import-Package>${osgi.import.package}</Import-Package>
+							<Export-Package>${osgi.export.package}</Export-Package>
+							<Private-Package>${osgi.private.package}</Private-Package>
+							<Import-Service>${osgi.import.service}</Import-Service>
+							<Export-Service>${osgi.export.service}</Export-Service>
+						</instructions>
+						<excludeDependencies>*</excludeDependencies>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>${maven-shade-plugin-version}</version>
+				</plugin>
+				<!-- Testing plugins , When you use Test Cases in the Code
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin-version}</version>
+					<configuration>
+						<runOrder>alphabetical</runOrder>
+						<failIfNoTests>false</failIfNoTests>
+						<includes>
+							<include>**/*Test.java</include>
+						</includes>
+					</configuration>
+				</plugin> -->
+			</plugins>
+		</pluginManagement>
+		<!-- Enable the following plugins for all children -->
+		<plugins>
+			<!-- Core plugins -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+			</plugin>
+			<!-- Testing plugins 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>-->
+		</plugins>
+	</build>
+
+</project>
