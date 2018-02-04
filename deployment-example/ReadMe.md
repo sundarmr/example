@@ -1,6 +1,7 @@
 The project depends on the parent project where the plugins are defined .
 Override the below property values to change any of them for child project
-["literal",subs="quotes"]
+
+```
 <jolokiaUrl>${jolokiaUrl}</jolokiaUrl>
 <profile>${profileName}</profile>
 <profileVersion>${profileVersion}</profileVersion>
@@ -11,14 +12,15 @@ Override the below property values to change any of them for child project
 <webContextPath>${webContextPath}</webContextPath>
 <abstractProfile>${isAbstractProfile}</abstractProfile>
 <includeArtifact>${isIncludeArtifact}</includeArtifact>
+```
 
 and place them in the properties section 
-
+```
 <properties>
   <profileName>somedifferentprofilename</profile>
   <profileVersion>1.1</profileVersion>
 </properties>
-
+```
 
 Run mvn fabric8:deploy on the project to see the project getting deployed to the profile somedifferentprofilename with version 1.1 
 
@@ -26,6 +28,7 @@ Run mvn fabric8:deploy on the project to see the project getting deployed to the
 Prerequisites
 
 1. Create the server section on your maven settings file 
+```
     <servers>
         ...
         <server>
@@ -33,7 +36,8 @@ Prerequisites
             <user>admin</user>
             <password>admin</password>
         </server>
-   </servers>
+  </servers>
+  ```
 2. If you want to over-ride the id of the server , you can do it so by changing the serverId property in your pom.xml . <servers>
 <server><id> = serverId property in the fabric8 configuration
 
