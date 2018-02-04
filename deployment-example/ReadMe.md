@@ -1,6 +1,6 @@
 The project depends on the parent project where the plugins are defined .
 Override the below property values to change any of them for child project
-
+["literal",subs="quotes"]
 <jolokiaUrl>${jolokiaUrl}</jolokiaUrl>
 <profile>${profileName}</profile>
 <profileVersion>${profileVersion}</profileVersion>
