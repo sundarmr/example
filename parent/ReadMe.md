@@ -29,7 +29,7 @@ This project acts as a guide project for all the projects which refer to this pr
 		<osgi.import.service>*</osgi.import.service>
 		<osgi.export.service>*</osgi.export.service>
 <properties>
-
+```
 3. The default values are configured to * , so if it is the same value we need these properties need not be defined.
 4. Declare the property which needs to be over-ridden.
 
