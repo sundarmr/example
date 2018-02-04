@@ -50,7 +50,7 @@ The plugin is configured as the maven-bundle-plugin and follows the same rules w
   <isIncludeArtifact>true</isIncludeArtifact>
 </properties>
 </properties>
-
+```
 
 ### Migration to a different version of Fuse
 
